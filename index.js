@@ -21,6 +21,7 @@ const firebaseConfig = {
   const svg = document.querySelector("svg");
 
   document.querySelector("button").addEventListener("click",e=>{
+      
     var citiesRef = db.collection("shapes");
 
     citiesRef.doc("jonas"+Math.random()).set({
@@ -28,6 +29,7 @@ const firebaseConfig = {
         cx:Math.floor(Math.random()*1000),
         cy:Math.floor(Math.random()*1000),
         r:Math.floor(Math.random()*100),
+        fill:`hsl(${Math.random()*360}, 70%, 70%)`
     });
   })
 
