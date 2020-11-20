@@ -26,6 +26,8 @@ const firebaseConfig = {
         capital: false, population: 860001,
         regions: ["west_coast", "norcal"] });
   })
+
+  
   db.collection("cities").where("state", "==", "CA")
     .onSnapshot(function(snapshot) {
         snapshot.docChanges().forEach(function(change) {
