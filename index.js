@@ -43,7 +43,12 @@ const firebaseConfig = {
             }
             if (change.type === "modified") {
                 console.log("Modified city: ", change.doc.data());
-
+                const myEl = document.querySelector(`[data-id="${change.doc.id}"]`)
+                const data = change.doc.data();
+                for (const property in data) {
+                    console.log(`${property}: ${data[property]}`);
+                    myEl.setAttributeNS(null, property, data[property])
+                  }
             }
             if (change.type === "removed") {
                 console.log("Removed city: ", change.doc.data());
@@ -60,7 +65,10 @@ const firebaseConfig = {
             shape.setAttributeNS(null, property, data[property])
           }
           shape.dataset.id=id;
+          setTimeout(()=>{shape.style.opacity=1}, 100)
+          
         svg.appendChild(shape)
+        
     }
 /*
   db.collection("cities").where("state", "==", "CA")
