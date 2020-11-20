@@ -18,24 +18,28 @@ const firebaseConfig = {
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
 
+  const svg = document.querySelector("svg");
+
   document.querySelector("button").addEventListener("click",e=>{
-    var citiesRef = db.collection("cities");
+    /*var citiesRef = db.collection("cities");
 
     citiesRef.doc("MI").set({
         name: "Firestore City", state: "CA", country: "USA",
         capital: false, population: 860001,
-        regions: ["west_coast", "norcal"] });
+        regions: ["west_coast", "norcal"] });*/
   })
 
-  
-  db.collection("cities").where("state", "==", "CA")
+
+  db.collection("shapes")
     .onSnapshot(function(snapshot) {
         snapshot.docChanges().forEach(function(change) {
             if (change.type === "added") {
                 console.log("New city: ", change.doc.data());
+                add(change.doc.data(), change.doc.id)
             }
             if (change.type === "modified") {
                 console.log("Modified city: ", change.doc.data());
+
             }
             if (change.type === "removed") {
                 console.log("Removed city: ", change.doc.data());
@@ -43,6 +47,16 @@ const firebaseConfig = {
         });
     });
 
+    function add(data, id){
+        var xmlns = "http://www.w3.org/2000/svg";
+        var shape = document.createElementNS(xmlns, data.type);
+        for (const property in data) {
+            console.log(`${property}: ${data[property]}`);
+            shape.setAttributeNS(null, property, data[property])
+          }
+          shape.dataset.id=id;
+        svg.appendChild(shape)
+    }
 /*
   db.collection("cities").where("state", "==", "CA")
     .onSnapshot(function(querySnapshot) {
