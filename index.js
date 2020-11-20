@@ -21,12 +21,14 @@ const firebaseConfig = {
   const svg = document.querySelector("svg");
 
   document.querySelector("button").addEventListener("click",e=>{
-    /*var citiesRef = db.collection("cities");
+    var citiesRef = db.collection("shapes");
 
-    citiesRef.doc("MI").set({
-        name: "Firestore City", state: "CA", country: "USA",
-        capital: false, population: 860001,
-        regions: ["west_coast", "norcal"] });*/
+    citiesRef.doc("jonas"+Math.random()).set({
+        type:"circle",
+        cx:Math.floor(Math.random()*1000),
+        cy:Math.floor(Math.random()*1000),
+        r:Math.floor(Math.random()*100),
+    });
   })
 
 
@@ -43,6 +45,7 @@ const firebaseConfig = {
             }
             if (change.type === "removed") {
                 console.log("Removed city: ", change.doc.data());
+                document.querySelector(`[data-id="${change.doc.id}"]`).remove()
             }
         });
     });
